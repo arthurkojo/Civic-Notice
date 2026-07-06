@@ -1,0 +1,9 @@
+{
+  "_instructions": "Fill in the fields below, then run: node import-admin.js <UID>. Delete this _instructions key before importing — it's just a note, not a real field.",
+  "email": "admin@example.com",
+  "fullName": "Admin",
+  "role": "admin",
+  "dob": "",
+  "bio": "",
+  "verified": true
+}

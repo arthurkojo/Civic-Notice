@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civic Notice — Sign In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="login-shell">
+  <div class="login-visual">
+    <div>
+      <div class="brand-mark">Civic Notice · Community Platform</div>
+      <h1>Where neighbors post the ideas that move things forward.</h1>
+      <p>Sign in with the credentials your community admin created for you to share suggestions and follow what's being proposed.</p>
+    </div>
+    <div class="pinboard">
+      <div class="pin-note">"More bike racks outside the library" — 12 supports</div>
+      <div class="pin-note">"Fix the streetlight on 4th Ave" — resolved</div>
+    </div>
+  </div>
+
+  <div class="login-form-side">
+    <div class="login-card">
+      <div class="eyebrow">Sign in</div>
+      <h2>Welcome back</h2>
+      <p class="sub">Enter the email and password your administrator issued to you.</p>
+
+      <div class="form-msg" id="formMsg"></div>
+
+      <form id="loginForm">
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="you@community.org" required autocomplete="username">
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Sign in</button>
+      </form>
+
+      <hr class="divider">
+      <p class="field-hint">Don't have an account? <a href="register.html">Register here</a> — an administrator will verify your account before you can access the dashboard.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase SDKs (compat build — simplest for a prototype) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-database-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

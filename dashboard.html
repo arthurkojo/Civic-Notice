@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civic Notice — My Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-mark">Civic Notice</div>
+      <h1>My Dashboard</h1>
+      <span class="role-tag" id="userNameTag">—</span>
+    </div>
+    <nav>
+      <div class="nav-item active" data-view="view-suggestions"><span class="dot"></span> Community Suggestions</div>
+      <div class="nav-item" data-view="view-myposts"><span class="dot"></span> My Posts</div>
+      <div class="nav-item" data-view="view-announcements"><span class="dot"></span> Admin Announcements</div>
+      <div class="nav-item" data-view="view-report"><span class="dot"></span> Submit a Report</div>
+      <div class="nav-item" data-view="view-profile"><span class="dot"></span> My Profile</div>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn btn-ghost btn-block" id="signOutBtn" style="color:#fff;border-color:rgba(255,255,255,.25);">Sign out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- COMMUNITY SUGGESTIONS -->
+    <section class="view active" id="view-suggestions">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">Post an idea</div>
+          <h2 class="section-title">Community Suggestions</h2>
+          <p class="lede">Share something that would make your community better. Everyone can see what's posted here.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:24px;">
+        <form id="postForm">
+          <div class="field">
+            <label for="postTitle">Title</label>
+            <input type="text" id="postTitle" placeholder="e.g. More recycling bins on Elm Street" required maxlength="80">
+          </div>
+          <div class="field">
+            <label for="postContent">Details</label>
+            <textarea id="postContent" placeholder="Describe the idea and why it would help the community…" required maxlength="600"></textarea>
+          </div>
+          <button type="submit" class="btn btn-accent" id="postSubmitBtn">Post suggestion</button>
+        </form>
+      </div>
+
+      <div class="section-sub">All suggestions, newest first</div>
+      <div class="notice-board" id="allPostsBoard">
+        <p class="loader">Loading suggestions…</p>
+      </div>
+    </section>
+
+    <!-- MY POSTS -->
+    <section class="view" id="view-myposts">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">Manage</div>
+          <h2 class="section-title">My Posts</h2>
+          <p class="lede">Edit or remove suggestions you've submitted.</p>
+        </div>
+      </div>
+      <div class="notice-board" id="myPostsBoard">
+        <p class="loader">Loading your posts…</p>
+      </div>
+    </section>
+
+    <!-- ADMIN ANNOUNCEMENTS (Read to view, Write to reply) -->
+    <section class="view" id="view-announcements">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">From the admin</div>
+          <h2 class="section-title">Admin Announcements</h2>
+          <p class="lede">Official notices from your community admin. Reply below if you have a question or update.</p>
+        </div>
+      </div>
+      <div class="notice-board" id="announcementsBoard">
+        <p class="loader">Loading announcements…</p>
+      </div>
+    </section>
+
+    <!-- SUBMIT A REPORT (Execute) -->
+    <section class="view" id="view-report">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">Take action</div>
+          <h2 class="section-title">Submit a Report</h2>
+          <p class="lede">Use this to submit a report or mark a task as complete for the admin to review.</p>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:24px;max-width:520px;">
+        <div class="form-msg" id="reportMsg"></div>
+        <form id="reportForm">
+          <div class="field">
+            <label for="reportContent">Report details</label>
+            <textarea id="reportContent" placeholder="Describe the task you completed or the issue you're reporting…" required maxlength="600"></textarea>
+          </div>
+          <button type="submit" class="btn btn-accent" id="reportSubmitBtn">Submit report</button>
+        </form>
+      </div>
+      <div class="section-sub">Your submitted reports</div>
+      <div id="myReportsBoard">
+        <p class="loader">Loading your reports…</p>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section class="view" id="view-profile">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">Account</div>
+          <h2 class="section-title">My Profile</h2>
+          <p class="lede">Keep your basic information up to date.</p>
+        </div>
+      </div>
+      <div class="card" style="max-width:520px;">
+        <div class="locked-notice hidden" id="profileLockedNotice">Your admin has turned off profile editing (Update) for your account, so these fields are read-only.</div>
+        <div class="form-msg" id="profileMsg"></div>
+        <form id="profileForm">
+          <div class="field">
+            <label for="profEmail">Email</label>
+            <input type="email" id="profEmail" disabled>
+            <p class="field-hint">Your email was set by your administrator and can't be changed here.</p>
+          </div>
+          <div class="field">
+            <label for="profFullName">Full name</label>
+            <input type="text" id="profFullName" placeholder="Jane Doe" required maxlength="80">
+          </div>
+          <div class="field">
+            <label for="profDob">Date of birth</label>
+            <input type="date" id="profDob">
+          </div>
+          <div class="field">
+            <label for="profBio">Other basic info</label>
+            <textarea id="profBio" placeholder="Neighborhood, occupation, anything you'd like your community to know…" maxlength="300"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" id="profileSaveBtn">Save profile</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- EDIT POST MODAL -->
+<div class="modal-backdrop" id="editModalBackdrop">
+  <div class="modal">
+    <h3>Edit suggestion</h3>
+    <p class="sub">Update your post below.</p>
+    <div class="form-msg" id="editMsg"></div>
+    <form id="editForm">
+      <input type="hidden" id="editPostId">
+      <div class="field">
+        <label for="editTitle">Title</label>
+        <input type="text" id="editTitle" required maxlength="80">
+      </div>
+      <div class="field">
+        <label for="editContent">Details</label>
+        <textarea id="editContent" required maxlength="600"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="editCancelBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-database-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/user.js"></script>
+</body>
+</html>

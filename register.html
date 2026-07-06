@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civic Notice — Create Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="login-shell">
+  <div class="login-visual">
+    <div>
+      <div class="brand-mark">Civic Notice · Community Platform</div>
+      <h1>Join your neighbors in shaping what comes next.</h1>
+      <p>Create your own account below. Once you register, a community admin will review and verify it — after that you'll be able to sign in and reach your dashboard.</p>
+    </div>
+    <div class="pinboard">
+      <div class="pin-note">"More bike racks outside the library" — 12 supports</div>
+      <div class="pin-note">"Fix the streetlight on 4th Ave" — resolved</div>
+    </div>
+  </div>
+
+  <div class="login-form-side">
+    <div class="login-card">
+      <div class="eyebrow">Create account</div>
+      <h2>Register</h2>
+      <p class="sub">Fill in your details. An administrator must verify your account before you can access the dashboard.</p>
+
+      <div class="form-msg" id="formMsg"></div>
+
+      <form id="registerForm">
+        <div class="field">
+          <label for="fullName">Full name</label>
+          <input type="text" id="fullName" placeholder="Jane Doe" required maxlength="80" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="you@community.org" required autocomplete="username">
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="At least 6 characters" required minlength="6" autocomplete="new-password">
+        </div>
+        <div class="field">
+          <label for="confirmPassword">Confirm password</label>
+          <input type="password" id="confirmPassword" placeholder="Re-enter your password" required minlength="6" autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="registerBtn">Create account</button>
+      </form>
+
+      <hr class="divider">
+      <p class="field-hint">Already have a verified account? <a href="index.html">Sign in here</a>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase SDKs (compat build — simplest for a prototype) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-database-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/register.js"></script>
+</body>
+</html>

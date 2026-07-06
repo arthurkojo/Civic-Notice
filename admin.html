@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civic Notice — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-mark">Civic Notice</div>
+      <h1>Admin Console</h1>
+      <span class="role-tag">Administrator</span>
+    </div>
+    <nav>
+      <div class="nav-item active" data-view="view-overview"><span class="dot"></span> Activity Overview</div>
+      <div class="nav-item" data-view="view-pending"><span class="dot"></span> Pending Approvals <span class="badge badge-admin" id="pendingCountBadge" style="display:none;margin-left:auto;"></span></div>
+      <div class="nav-item" data-view="view-users"><span class="dot"></span> Manage Users</div>
+      <div class="nav-item" data-view="view-posts"><span class="dot"></span> All Posts</div>
+      <div class="nav-item" data-view="view-announcements"><span class="dot"></span> Announcements</div>
+      <div class="nav-item" data-view="view-reports"><span class="dot"></span> Reports</div>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn btn-ghost btn-block" id="signOutBtn" style="color:#fff;border-color:rgba(255,255,255,.25);">Sign out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- OVERVIEW -->
+    <section class="view active" id="view-overview">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">Dashboard</div>
+          <h2 class="section-title">Activity Overview</h2>
+          <p class="lede">A snapshot of who's on the platform and what's being shared.</p>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card"><div class="stat-num" id="statUsers">–</div><div class="stat-label">Registered users</div></div>
+        <div class="stat-card"><div class="stat-num" id="statPending">–</div><div class="stat-label">Pending approval</div></div>
+        <div class="stat-card"><div class="stat-num" id="statPosts">–</div><div class="stat-label">Community posts</div></div>
+        <div class="stat-card"><div class="stat-num" id="statAdmins">–</div><div class="stat-label">Admins</div></div>
+      </div>
+      <div class="card">
+        <div class="section-title" style="font-size:16px;">Most recent suggestions</div>
+        <div class="section-sub">Latest 5 posts across the platform</div>
+        <div id="recentPostsList"><p class="loader">Loading…</p></div>
+      </div>
+    </section>
+
+    <!-- PENDING APPROVALS -->
+    <section class="view" id="view-pending">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">Self-registration</div>
+          <h2 class="section-title">Pending Approvals</h2>
+          <p class="lede">People who registered themselves at the sign-in page, waiting on your review. Approve to give them access to the dashboard with default permissions, or reject to remove their request.</p>
+        </div>
+      </div>
+      <div class="card">
+        <table class="data-table">
+          <thead>
+            <tr><th>Name</th><th>Email</th><th>Registered</th><th></th></tr>
+          </thead>
+          <tbody id="pendingUsersTableBody">
+            <tr class="empty-row"><td colspan="4">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- MANAGE USERS -->
+    <section class="view" id="view-users">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">Access control</div>
+          <h2 class="section-title">Manage Users</h2>
+          <p class="lede">Community members can register themselves from the sign-in page (see Pending Approvals), or you can add an account directly here — useful for other admins.</p>
+        </div>
+        <button class="btn btn-accent" id="openCreateUserBtn">+ Create user</button>
+      </div>
+      <div class="perm-legend">
+        <span><b>R</b> Read (view announcements)</span>
+        <span><b>W</b> Write (reply to announcements)</span>
+        <span><b>U</b> Update (edit profile &amp; own posts)</span>
+        <span><b>D</b> Delete (remove own posts)</span>
+        <span><b>X</b> Execute (submit reports/tasks)</span>
+      </div>
+      <div class="card">
+        <table class="data-table">
+          <thead>
+            <tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Joined</th><th>Permissions</th><th></th></tr>
+          </thead>
+          <tbody id="usersTableBody">
+            <tr class="empty-row"><td colspan="7">Loading users…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ANNOUNCEMENTS -->
+    <section class="view" id="view-announcements">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">Broadcast</div>
+          <h2 class="section-title">Announcements</h2>
+          <p class="lede">Post official notices. Users only see these if their Read permission is ON, and can only reply if Write is ON.</p>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:24px;">
+        <form id="announcementForm">
+          <div class="field">
+            <label for="announcementTitle">Title</label>
+            <input type="text" id="announcementTitle" placeholder="e.g. Road closure this weekend" required maxlength="80">
+          </div>
+          <div class="field">
+            <label for="announcementContent">Details</label>
+            <textarea id="announcementContent" placeholder="Write the announcement…" required maxlength="600"></textarea>
+          </div>
+          <button type="submit" class="btn btn-accent" id="announcementSubmitBtn">Post announcement</button>
+        </form>
+      </div>
+      <div class="section-sub">Posted announcements &amp; replies</div>
+      <div class="notice-board" id="announcementsAdminBoard">
+        <p class="loader">Loading announcements…</p>
+      </div>
+    </section>
+
+    <!-- REPORTS -->
+    <section class="view" id="view-reports">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">Execute actions</div>
+          <h2 class="section-title">Reports</h2>
+          <p class="lede">Reports and completed-task submissions from users with Execute permission turned on.</p>
+        </div>
+      </div>
+      <div class="card">
+        <table class="data-table">
+          <thead>
+            <tr><th>User</th><th>Report</th><th>Submitted</th><th>Status</th></tr>
+          </thead>
+          <tbody id="reportsTableBody">
+            <tr class="empty-row"><td colspan="4">Loading reports…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ALL POSTS -->
+    <section class="view" id="view-posts">
+      <div class="page-head">
+        <div>
+          <div class="eyebrow">Moderation</div>
+          <h2 class="section-title">All Community Posts</h2>
+          <p class="lede">Review everything submitted and remove anything inappropriate or irrelevant.</p>
+        </div>
+      </div>
+      <div class="notice-board" id="allPostsAdminBoard">
+        <p class="loader">Loading posts…</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- CREATE USER MODAL -->
+<div class="modal-backdrop" id="createUserBackdrop">
+  <div class="modal">
+    <h3>Create a new user</h3>
+    <p class="sub">They'll be able to sign in immediately with these credentials.</p>
+    <div class="form-msg" id="createUserMsg"></div>
+    <form id="createUserForm">
+      <div class="field">
+        <label for="newFullName">Full name</label>
+        <input type="text" id="newFullName" required maxlength="80" placeholder="Jane Doe">
+      </div>
+      <div class="field">
+        <label for="newEmail">Email</label>
+        <input type="email" id="newEmail" required placeholder="jane@community.org">
+      </div>
+      <div class="field">
+        <label for="newPassword">Temporary password</label>
+        <input type="text" id="newPassword" required minlength="6" placeholder="At least 6 characters">
+        <p class="field-hint">Share this with them privately — they can't reset it themselves in this prototype.</p>
+      </div>
+      <div class="field">
+        <label for="newRole">Role</label>
+        <select id="newRole">
+          <option value="user" selected>User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <fieldset id="newUserPermsFieldset" style="border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:16px;">
+        <legend style="font-size:12.5px;color:var(--color-text-muted);padding:0 4px;">Starting permissions (can be changed later)</legend>
+        <div class="checkbox-row"><input type="checkbox" id="newPermRead" checked><label for="newPermRead">Read — view admin announcements</label></div>
+        <div class="checkbox-row"><input type="checkbox" id="newPermWrite" checked><label for="newPermWrite">Write — reply to announcements</label></div>
+        <div class="checkbox-row"><input type="checkbox" id="newPermUpdate" checked><label for="newPermUpdate">Update — edit profile &amp; own posts</label></div>
+        <div class="checkbox-row"><input type="checkbox" id="newPermDelete" checked><label for="newPermDelete">Delete — remove own posts</label></div>
+        <div class="checkbox-row"><input type="checkbox" id="newPermExecute" checked><label for="newPermExecute">Execute — submit reports/tasks</label></div>
+      </fieldset>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="cancelCreateUserBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="createUserSubmitBtn">Create user</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-database-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
